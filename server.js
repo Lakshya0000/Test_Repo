@@ -1,15 +1,44 @@
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
+
 const app = express();
 app.use(express.json());
+
+const DATA_FILE = path.join(__dirname, "data.txt");
+
+function loadData() {
+  if (fs.existsSync(DATA_FILE)) {
+    try {
+      return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
+function saveData(seats, bookings, bookingCounter) {
+  const payload = { seats: {}, bookings, bookingCounter };
+  for (const [id, seat] of Object.entries(seats)) {
+    payload.seats[id] = { available: seat.available };
+  }
+  fs.writeFileSync(DATA_FILE, JSON.stringify(payload, null, 2), "utf8");
+}
+
+const stored = loadData();
 
 const seats = {};
 ["A", "B"].forEach((row) => {
   for (let i = 1; i <= 20; i++) {
-    seats[`${row}${i}`] = { available: true, locked: false };
+    const id = `${row}${i}`;
+    const available = stored?.seats?.[id]?.available ?? true;
+    seats[id] = { available, locked: false };
   }
 });
 
-let bookingCounter = 100;
+let bookingCounter = stored?.bookingCounter ?? 100;
+const bookings = stored?.bookings ?? [];
 
 function processPayment(payment) {
   const { payment_mode } = payment;
@@ -85,14 +114,30 @@ app.post("/book", (req, res) => {
     seat.locked = false;
     const bookingId = `B${++bookingCounter}`;
 
+    const record = {
+      booking_id: bookingId,
+      seat_id: seatId,
+      user,
+      payment_mode: payment.payment_mode,
+      status: "CONFIRMED",
+      booked_at: new Date().toISOString(),
+    };
+    bookings.push(record);
+    saveData(seats, bookings, bookingCounter);
+
     res.status(201).json({ booking_id: bookingId, seat_id: seatId, status: "CONFIRMED" });
   } catch (err) {
-    seat.locked = false; 
+    seat.locked = false;
     res.status(500).json({ error: "Internal server error." });
   }
 });
 
+app.get("/bookings", (req, res) => {
+  res.json(bookings);
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🎬 Dhurandhar Ticket Booking API running on http://localhost:${PORT}`);
+  console.log(` Dhurandhar Ticket Booking API running on http://localhost:${PORT}`);
+  // console.log(`📄 Data stored in: ${DATA_FILE}`);
 });

@@ -1,0 +1,135 @@
+{
+  "seats": {
+    "A1": {
+      "available": true
+    },
+    "A2": {
+      "available": true
+    },
+    "A3": {
+      "available": true
+    },
+    "A4": {
+      "available": true
+    },
+    "A5": {
+      "available": true
+    },
+    "A6": {
+      "available": true
+    },
+    "A7": {
+      "available": true
+    },
+    "A8": {
+      "available": true
+    },
+    "A9": {
+      "available": true
+    },
+    "A10": {
+      "available": true
+    },
+    "A11": {
+      "available": true
+    },
+    "A12": {
+      "available": true
+    },
+    "A13": {
+      "available": true
+    },
+    "A14": {
+      "available": true
+    },
+    "A15": {
+      "available": true
+    },
+    "A16": {
+      "available": true
+    },
+    "A17": {
+      "available": true
+    },
+    "A18": {
+      "available": true
+    },
+    "A19": {
+      "available": true
+    },
+    "A20": {
+      "available": false
+    },
+    "B1": {
+      "available": true
+    },
+    "B2": {
+      "available": true
+    },
+    "B3": {
+      "available": true
+    },
+    "B4": {
+      "available": true
+    },
+    "B5": {
+      "available": true
+    },
+    "B6": {
+      "available": true
+    },
+    "B7": {
+      "available": true
+    },
+    "B8": {
+      "available": true
+    },
+    "B9": {
+      "available": true
+    },
+    "B10": {
+      "available": true
+    },
+    "B11": {
+      "available": true
+    },
+    "B12": {
+      "available": true
+    },
+    "B13": {
+      "available": true
+    },
+    "B14": {
+      "available": true
+    },
+    "B15": {
+      "available": true
+    },
+    "B16": {
+      "available": true
+    },
+    "B17": {
+      "available": true
+    },
+    "B18": {
+      "available": true
+    },
+    "B19": {
+      "available": true
+    },
+    "B20": {
+      "available": true
+    }
+  },
+  "bookings": [
+    {
+      "booking_id": "B101",
+      "seat_id": "A20",
+      "user": "user0",
+      "payment_mode": "UPI",
+      "status": "CONFIRMED",
+      "booked_at": "2026-03-12T05:44:47.198Z"
+    }
+  ],
+  "bookingCounter": 101
+}
